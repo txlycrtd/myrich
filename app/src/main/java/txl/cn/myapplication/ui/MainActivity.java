@@ -1,7 +1,9 @@
-package txl.cn.myapplication;
+package txl.cn.myapplication.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import txl.cn.myapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 
