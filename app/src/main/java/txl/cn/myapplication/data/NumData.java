@@ -35,4 +35,6 @@ public class NumData {
         this.numTwo=NumUtils.getTwoNum(num);
         this.numThree=NumUtils.getThreeNum(num);
     }
-}
+    public  int getAndValue(int num){
+        return numOne+numTwo+numThree;
+    }}

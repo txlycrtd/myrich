@@ -5,6 +5,7 @@ package txl.cn.myapplication.utlis;
  */
 
 public class NumUtils {
+
     public static int getNum(int num){
 
         if(num<10){
@@ -17,6 +18,7 @@ public class NumUtils {
             return num;
         }
     }
+
     public static int getOneNum(int num){
         if(num<100){
             return 0;
@@ -25,16 +27,22 @@ public class NumUtils {
         }
     }
     public static int getTwoNum(int num){
-        if(num<100){
+        if(num<10){
             return 0;
-        }else {
+        }else if(num>9&&num<100){
+            return num/10;
+        }
+        else {
             return (num%100)/10;
         }
     }
     public static int getThreeNum(int num){
-        if(num<100){
-            return 0;
-        }else {
+        if(num<10){
+            return num;
+        }else if(num>9&&num<100){
+            return num%10%10;
+        }
+        else {
             return num%100%10;
         }
     }
@@ -44,4 +52,6 @@ public class NumUtils {
     private static int stringToint(String numS){
         return Integer.parseInt(numS);
     }
+
+
 }
