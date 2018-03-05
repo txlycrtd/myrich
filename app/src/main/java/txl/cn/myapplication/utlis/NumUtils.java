@@ -1,5 +1,7 @@
 package txl.cn.myapplication.utlis;
 
+import txl.cn.myapplication.data.NumData;
+
 /**
  * Created by tangxl on 2018/3/1.
  */
@@ -46,12 +48,42 @@ public class NumUtils {
             return num%100%10;
         }
     }
-    private static String intToString(int num){
-            return num+"";
+    public static String intToString(NumData num){
+            return num.getNumOne()+""+num.getNumTwo()+""+num.getNumThree();
     }
     private static int stringToint(String numS){
         return Integer.parseInt(numS);
     }
+    public static boolean isTwoAndSame(NumData data,NumData datas){
+        if(data.getNumOne()+data.getNumTwo()==datas.getNumOne()+datas.getNumOne()){
+            return true;
+        }
+        if(data.getNumOne()+data.getNumThree()==datas.getNumOne()+datas.getNumThree()){
+            return true;
+        }
+        if(data.getNumTwo()+data.getNumThree()==datas.getNumTwo()+datas.getNumThree()){
+            return true;
+        }
+        return false;
+    }
 
+    public static boolean isSizeSame(NumData data,NumData datas){
 
+        return data.getNumSize().equals(datas.getNumSize());
+    }
+    public static boolean isNumSame(NumData data,NumData datas){
+        if(datas.getNumOne()==data.getNumOne()&&datas.getNumTwo()==data.getNumTwo()){
+           return true;
+        }
+        if(datas.getNumTwo()==data.getNumTwo()&&datas.getNumThree()==data.getNumThree()){
+           return true;
+        }
+        if(datas.getNumOne()==data.getNumOne()&&datas.getNumThree()==data.getNumThree()){
+          return true;
+        }
+        return false;
+    }
+    public static boolean isAndSame(NumData data,NumData datas){
+        return data.getNumOne()+data.getNumTwo()+data.getNumThree()==datas.getNumOne()+datas.getNumTwo()+datas.getNumThree();
+    }
 }

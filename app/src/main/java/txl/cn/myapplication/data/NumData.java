@@ -27,8 +27,18 @@ public class NumData {
         return numThree;
     }
 
-
-
+    private String getNumOneSize(){
+        return getNumOne()<4?"小":"大";
+    }
+    private String getNumTwoSize(){
+        return getNumTwo()<4?"小":"大";
+    }
+    private String getNumThreeSize(){
+        return getNumThree()<4?"小":"大";
+    }
+    public String getNumSize(){
+        return getNumOneSize()+getNumTwoSize()+getNumThreeSize();
+    }
     public NumData(int num){
         this.num= NumUtils.getNum(num);
         this.numOne=NumUtils.getOneNum(num);
