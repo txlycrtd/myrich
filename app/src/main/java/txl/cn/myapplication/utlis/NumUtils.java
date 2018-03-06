@@ -1,5 +1,7 @@
 package txl.cn.myapplication.utlis;
 
+import android.util.Log;
+
 import txl.cn.myapplication.data.NumData;
 
 /**
@@ -85,5 +87,28 @@ public class NumUtils {
     }
     public static boolean isAndSame(NumData data,NumData datas){
         return data.getNumOne()+data.getNumTwo()+data.getNumThree()==datas.getNumOne()+datas.getNumTwo()+datas.getNumThree();
+    }
+    public static boolean isAndisTen(NumData data,NumData datas){
+        if((data.getNumOne()+datas.getNumOne())==10){
+            return true;
+        }
+        if((data.getNumTwo()+datas.getNumTwo())==10){
+            return true;
+        }
+        if((data.getNumThree()+datas.getNumThree())==10){
+            return true;
+        }
+        return false;
+    }
+    public static boolean isAbs(NumData data,NumData datas){
+        int abs=Math.abs(data.getNumOne()-datas.getNumOne())+Math.abs(data.getNumTwo()-datas.getNumTwo())+Math.abs(data.getNumThree()-datas.getNumThree());
+        if(abs<9&&abs>22){
+            Log.i("删除6",NumUtils.intToString(data)+"<>"+NumUtils.intToString(datas)+"<>"+abs);
+            return true;
+        }
+        return false;
+    }
+    public static int getAndValue(NumData data){
+        return data.getNumOne()+data.getNumTwo()+data.getNumThree();
     }
 }

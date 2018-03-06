@@ -11,6 +11,7 @@ public class NumData {
     private int numOne;
     private int numTwo;
     private int numThree;
+
     public int getNum() {
         return num;
     }
@@ -27,24 +28,26 @@ public class NumData {
         return numThree;
     }
 
-    private String getNumOneSize(){
-        return getNumOne()<4?"小":"大";
+    private String getNumOneSize() {
+        return getNumOne() < 4 ? "小" : "大";
     }
-    private String getNumTwoSize(){
-        return getNumTwo()<4?"小":"大";
+
+    private String getNumTwoSize() {
+        return getNumTwo() < 4 ? "小" : "大";
     }
-    private String getNumThreeSize(){
-        return getNumThree()<4?"小":"大";
+
+    private String getNumThreeSize() {
+        return getNumThree() < 4 ? "小" : "大";
     }
-    public String getNumSize(){
-        return getNumOneSize()+getNumTwoSize()+getNumThreeSize();
+
+    public String getNumSize() {
+        return getNumOneSize() + getNumTwoSize() + getNumThreeSize();
     }
-    public NumData(int num){
-        this.num= NumUtils.getNum(num);
-        this.numOne=NumUtils.getOneNum(num);
-        this.numTwo=NumUtils.getTwoNum(num);
-        this.numThree=NumUtils.getThreeNum(num);
+
+    public NumData(int num) {
+        this.num = NumUtils.getNum(num);
+        this.numOne = NumUtils.getOneNum(num);
+        this.numTwo = NumUtils.getTwoNum(num);
+        this.numThree = NumUtils.getThreeNum(num);
     }
-    public  int getAndValue(int num){
-        return numOne+numTwo+numThree;
-    }}
+}
