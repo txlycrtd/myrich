@@ -29,15 +29,15 @@ public class NumData {
     }
 
     private String getNumOneSize() {
-        return getNumOne() < 4 ? "小" : "大";
+        return getNumOne() < 5 ? "小" : "大";
     }
 
     private String getNumTwoSize() {
-        return getNumTwo() < 4 ? "小" : "大";
+        return getNumTwo() < 5 ? "小" : "大";
     }
 
     private String getNumThreeSize() {
-        return getNumThree() < 4 ? "小" : "大";
+        return getNumThree() < 5 ? "小" : "大";
     }
 
     public String getNumSize() {

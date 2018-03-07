@@ -111,4 +111,43 @@ public class NumUtils {
     public static int getAndValue(NumData data){
         return data.getNumOne()+data.getNumTwo()+data.getNumThree();
     }
+
+    /**
+     * 根据两期 判断波动
+     * @return
+     */
+    public static boolean isWave(NumData data1,NumData data2,NumData data3){
+        Log.i("波动",getWave(data2,data3)+data3.getNum());
+        if(getWave(data1,data2).equals(getWave(data2,data3))){
+            return true;
+        }
+        return false;
+    }
+    private static String getWave(NumData data,NumData datas){
+        String waveOne="";
+        if(datas.getNumOne()>data.getNumOne()){
+            waveOne="右";
+        }else if(datas.getNumOne()<data.getNumOne()){
+            waveOne="左";
+        }else {
+            waveOne="中";
+        }
+        String waveTwo="";
+        if(datas.getNumTwo()>data.getNumTwo()){
+            waveTwo="右";
+        }else if(datas.getNumTwo()<data.getNumTwo()){
+            waveTwo="左";
+        }else {
+            waveTwo="中";
+        }
+        String waveThree="";
+        if(datas.getNumThree()>data.getNumThree()){
+            waveThree="右";
+        }else if(datas.getNumThree()<data.getNumThree()){
+            waveThree="左";
+        }else {
+            waveThree="中";
+        }
+        return waveOne+waveTwo+waveThree;
+    }
 }

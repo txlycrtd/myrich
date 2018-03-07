@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         newDataList=new ArrayList();
-        numData=new int[]{401,659,810,179,749,272,992,102};
+        numData=new int[]{401,659,810,179,749,272,992,102,664};
         dataList=new ArrayList();
         for(int i=0;i<1000;i++){
             NumData data=new NumData(i);
@@ -36,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i=0;i<dataList.size();i++){
             isCanMove=false;
             data= (NumData) dataList.get(i);
-
+            if(NumUtils.isWave(new NumData(numData[7]),new NumData(numData[8]),data)){
+                isCanMove=true;
+            }
             for(int a=0;a<numData.length;a++){
 
                  datas=new NumData(numData[a]);
@@ -49,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
                    Log.i("删除2",NumUtils.intToString(data));
                }
                 if(a==numData.length-1){
-                    if(NumUtils.isAndisTen(data,datas)){
-                        isCanMove=true;
-                        Log.i("删除3",NumUtils.intToString(data)+"<>"+NumUtils.intToString(datas)+"<>"+(10-datas.getNumOne()));
-                    }
+//                    if(NumUtils.isAndisTen(data,datas)){
+//                        isCanMove=true;
+//                        Log.i("删除3",NumUtils.intToString(data)+"<>"+NumUtils.intToString(datas)+"<>"+(10-datas.getNumOne()));
+//                    }
                     if(NumUtils.isTwoAndSame(data,datas)){
                        isCanMove=true;
                         Log.i("删除4",NumUtils.intToString(data)+"<>"+NumUtils.intToString(datas));
@@ -80,11 +82,10 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.i("还剩多少",newDataList.size()+"");
         for(int b=0;b<newDataList.size();b++){
-
+            Log.i("序号",b+"");
             Log.i("值",(NumUtils.intToString((NumData)newDataList.get(b))));
             Log.i("和",NumUtils.getAndValue((NumData)newDataList.get(b))+"");
             Log.i("大小",((NumData)newDataList.get(b)).getNumSize());
-
             Log.i("1",((NumData)newDataList.get(b)).getNumOne()+"");
             Log.i("2",((NumData)newDataList.get(b)).getNumTwo()+"");
             Log.i("3",((NumData)newDataList.get(b)).getNumThree()+"");
