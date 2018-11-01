@@ -1,6 +1,8 @@
 package txl.cn.myapplication.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +17,11 @@ import txl.cn.myapplication.data.DbData;
 import txl.cn.myapplication.ui.DataLookActivity;
 
 public class MyAdapter extends RecyclerView.Adapter {
-    private List<DbData> data;
+    private List<DbData> dataLists;
     private Context context;
     public MyAdapter(Context context, List<DbData> dataList){
         this.context=context;
-        this.data=dataList;
+        this.dataLists=dataList;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,12 +31,12 @@ public class MyAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((MyViewHolder)holder).bind(data.get(position));
+        ((MyViewHolder)holder).bind(dataLists.get(position),position);
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return dataLists.size();
     }
     private class MyViewHolder extends RecyclerView.ViewHolder{
         private Button btDelete,btXG;
@@ -46,13 +48,38 @@ public class MyAdapter extends RecyclerView.Adapter {
             tvCount=itemView.findViewById(R.id.tv_num_count);
             tvNumText=itemView.findViewById(R.id.tv_num);
         }
-        public void bind(DbData data){
+        public void bind(final DbData data, final int p){
+            if(p==dataLists.size()-1){
+                btDelete.setVisibility(View.VISIBLE);
+            }else {
+                btDelete.setVisibility(View.GONE);
+            }
             tvNumText.setText(data.getNum()+"");
             tvCount.setText((data.getNumCount()+1)+"");
             btDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("确定删除该条数据？");
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            dataLists.remove(p);
+                          notifyDataSetChanged();
+                            ((DataLookActivity)context).getManager().deleteNum(data.getNumCount());
+                            dialog.dismiss();
 
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             });
 

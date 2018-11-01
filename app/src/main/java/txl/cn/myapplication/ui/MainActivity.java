@@ -45,16 +45,8 @@ public class MainActivity extends AppCompatActivity {
       data=new ArrayList<>();
       datas=new ArrayList<>();
       dbManager=new DBManager(this);
-        if(dbManager.queryDta().size()>0){
-            numNa=dbManager.queryDta().size();
-        }
-        if(numNa>0){
-            tvNumCount.setVisibility(View.VISIBLE);
-            tvNumCount.setText("共"+numNa+"条数据");
-        }else {
-            tvNumCount.setVisibility(View.GONE);
-        }
 
+        showNumcount();
       btGo.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -125,5 +117,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         startActivity(InputActivity.InPutInit(this,string,datas.size()));
+    }
+    private void showNumcount(){
+            numNa=dbManager.queryDta().size();
+        if(numNa>0){
+            tvNumCount.setVisibility(View.VISIBLE);
+            tvNumCount.setText("共"+numNa+"条数据");
+        }else {
+            tvNumCount.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showNumcount();
     }
 }
