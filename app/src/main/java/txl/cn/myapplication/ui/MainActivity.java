@@ -1,94 +1,129 @@
 package txl.cn.myapplication.ui;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import txl.cn.myapplication.R;
+import txl.cn.myapplication.data.DbData;
 import txl.cn.myapplication.data.NumData;
+import txl.cn.myapplication.db.DBManager;
+import txl.cn.myapplication.utlis.GetDataUtils;
 import txl.cn.myapplication.utlis.NumUtils;
 
 public class MainActivity extends AppCompatActivity {
-    private int[] numData;
-    private List dataList;
-    private NumData data;
-    private NumData datas;
-    private boolean isCanMove=false;
-    private List newDataList;
+    private EditText edOne,edTwo;
+    private int numOne,numTwo;
+    private Button btGo,btGoto;
+    private NumData numData,numDatas;
+    private List<NumData> data,datas;
+    private DBManager dbManager;
+    private int numNa=0;
+    private TextView tvNumCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+        initView();
     }
 
-    private void init() {
-        newDataList=new ArrayList();
-        numData=new int[]{401,659,810,179,749,272,992,102,664};
-        dataList=new ArrayList();
+    private void initView() {
+      edOne=findViewById(R.id.et_one);
+//      edTwo=findViewById(R.id.et_two);
+      btGo=findViewById(R.id.bt_go);
+      btGoto=findViewById(R.id.bt_golook);
+      tvNumCount=findViewById(R.id.tv_numcount);
+      data=new ArrayList<>();
+      datas=new ArrayList<>();
+      dbManager=new DBManager(this);
+        if(dbManager.queryDta().size()>0){
+            numNa=dbManager.queryDta().size();
+        }
+        if(numNa>0){
+            tvNumCount.setVisibility(View.VISIBLE);
+            tvNumCount.setText("共"+numNa+"条数据");
+        }else {
+            tvNumCount.setVisibility(View.GONE);
+        }
+
+      btGo.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              getDatas();
+          }
+      });
+      btGoto.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              startActivity(new Intent(MainActivity.this,DataLookActivity.class));
+          }
+      });
+    }
+    private void getDatas(){
+        if(edOne.getText().toString().isEmpty()||edOne.getText().toString().length()!=3){
+            Toast.makeText(this,"输入不合法",Toast.LENGTH_SHORT).show();
+           return;
+        }
+
+        int input=Integer.parseInt(edOne.getText().toString());
+        DbData dbData=new DbData();
+        dbData.setNumCount(numNa);
+        dbData.setNum(input);
+        dbManager.addNum(dbData);
+        numNa++;
+        edOne.setText("");
+        tvNumCount.setVisibility(View.VISIBLE);
+        tvNumCount.setText("共"+numNa+"条数据");
+        Toast.makeText(this,"添加成功",Toast.LENGTH_SHORT).show();
+        Log.i("数据",dbManager.queryDta().toString());
+    }
+    private void getData() {
+        data.clear();
         for(int i=0;i<1000;i++){
-            NumData data=new NumData(i);
-            dataList.add(data);
+            NumData nuData=new NumData(i);
+            Log.i("单双",nuData.getNum()+"<>"+nuData.getNumDS());
+            data.add(nuData);
         }
-        for (int i=0;i<dataList.size();i++){
-            isCanMove=false;
-            data= (NumData) dataList.get(i);
-            if(NumUtils.isWave(new NumData(numData[7]),new NumData(numData[8]),data)){
-                isCanMove=true;
-            }
-            for(int a=0;a<numData.length;a++){
-
-                 datas=new NumData(numData[a]);
-               if(NumUtils.isNumSame(data,datas)){
-                  isCanMove=true;
-                  Log.i("删除1",NumUtils.intToString(data));
-               }
-               if(NumUtils.isAndSame(data,datas)&&NumUtils.isSizeSame(data,datas)){
-                  isCanMove=true;
-                   Log.i("删除2",NumUtils.intToString(data));
-               }
-                if(a==numData.length-1){
-//                    if(NumUtils.isAndisTen(data,datas)){
-//                        isCanMove=true;
-//                        Log.i("删除3",NumUtils.intToString(data)+"<>"+NumUtils.intToString(datas)+"<>"+(10-datas.getNumOne()));
-//                    }
-                    if(NumUtils.isTwoAndSame(data,datas)){
-                       isCanMove=true;
-                        Log.i("删除4",NumUtils.intToString(data)+"<>"+NumUtils.intToString(datas));
-                    }
-                    if(NumUtils.isSizeSame(data,datas)){
-                       isCanMove=true;
-                        Log.i("删除5",NumUtils.intToString(data)+"<>"+NumUtils.intToString(datas));
-                    }
-                    if (NumUtils.isAbs(data,datas)){
-                        isCanMove=true;
-                    }
-                    if(NumUtils.getAndValue(data)<10||NumUtils.getAndValue(data)>20){
-                        isCanMove=true;
-                    }
-                }
-
-            }
-
-            if (!isCanMove){
-                Log.i("什么鬼啊",NumUtils.intToString((NumData) dataList.get(i))+"<>"+i);
-//                dataList.remove(i);
-                newDataList.add(dataList.get(i));
-            }
-
+        String oneText=edOne.getText().toString();
+        String twoText=edTwo.getText().toString();
+        if(null==oneText||null==twoText||oneText.isEmpty()||twoText.isEmpty()){
+            Toast.makeText(this,"号码不能为空",Toast.LENGTH_LONG).show();
+            return;
         }
-        Log.i("还剩多少",newDataList.size()+"");
-        for(int b=0;b<newDataList.size();b++){
-            Log.i("序号",b+"");
-            Log.i("值",(NumUtils.intToString((NumData)newDataList.get(b))));
-            Log.i("和",NumUtils.getAndValue((NumData)newDataList.get(b))+"");
-            Log.i("大小",((NumData)newDataList.get(b)).getNumSize());
-            Log.i("1",((NumData)newDataList.get(b)).getNumOne()+"");
-            Log.i("2",((NumData)newDataList.get(b)).getNumTwo()+"");
-            Log.i("3",((NumData)newDataList.get(b)).getNumThree()+"");
+//        if(null==twoText||twoText.isEmpty()){
+//            Toast.makeText(this,"号码不能为空",Toast.LENGTH_LONG).show();
+//            return;
+
+        numOne=Integer.parseInt(oneText);
+        numTwo=Integer.parseInt(twoText);
+        numData=new NumData(numOne);
+        numDatas=new NumData(numTwo);
+        datas.clear();
+        for(int i=0;i<data.size();i++){
+//            if(GetDataUtils.getData(numData,numDatas,data.get(i))){
+//                datas.add(data.get(i));
+//            }
+            if(GetDataUtils.getDatas(numData,numDatas,data.get(i))){
+                datas.add(data.get(i));
+            }
         }
+        String string="";
+        for(int i=0;i<datas.size();i++){
+            if(i!=datas.size()-1){
+                string=string+NumUtils.intToString(datas.get(i))+",";
+            }else {
+                string=string+NumUtils.intToString(datas.get(i));
+            }
+        }
+        startActivity(InputActivity.InPutInit(this,string,datas.size()));
     }
 }
