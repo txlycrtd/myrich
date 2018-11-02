@@ -50,7 +50,7 @@ public class DBManager  {
         ContentValues cv = new ContentValues();
         String[] ids = {data.getNumCount()+""};
         cv.put("numcount",data.getNumCount());
-        cv.put("nums",data.getNum());
+        cv.put("num",data.getNum());
         db.update("nums",cv,"numcount=?",ids);
     }
 }
