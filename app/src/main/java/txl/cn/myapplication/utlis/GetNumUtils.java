@@ -21,6 +21,8 @@ public class GetNumUtils {
             numDataList.add(numData);
         }
     }
+    private void getHistoryData(){
 
+    }
 
 }
