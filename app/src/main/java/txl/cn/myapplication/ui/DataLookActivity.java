@@ -11,6 +11,9 @@ import android.widget.Button;
 import txl.cn.myapplication.R;
 import txl.cn.myapplication.adapter.MyAdapter;
 import txl.cn.myapplication.db.DBManager;
+import txl.cn.myapplication.utlis.GetDataUtils;
+import txl.cn.myapplication.utlis.GetNumUtils;
+import txl.cn.myapplication.utlis.NumUtils;
 
 public class DataLookActivity extends AppCompatActivity {
     private RecyclerView dataList;
@@ -37,7 +40,8 @@ public class DataLookActivity extends AppCompatActivity {
         btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                GetNumUtils utils=new GetNumUtils(manager.queryDta());
+                utils.getDataLaw();
             }
         });
     }

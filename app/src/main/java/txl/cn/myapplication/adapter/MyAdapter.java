@@ -59,7 +59,8 @@ public class MyAdapter extends RecyclerView.Adapter {
             }else {
                 btDelete.setVisibility(View.GONE);
             }
-            tvNumText.setText(data.getNum()+"");
+            NumData datas=new NumData(data.getNum());
+            tvNumText.setText(datas.numStr());
             tvCount.setText((data.getNumCount()+1)+"");
             btDelete.setOnClickListener(new View.OnClickListener() {
                 @Override

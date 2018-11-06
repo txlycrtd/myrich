@@ -10,6 +10,19 @@ public class NumData {
     private int num;
     private int numOne;
     private int numTwo;
+
+    public void setNumOne(int numOne) {
+        this.numOne = numOne;
+    }
+
+    public void setNumTwo(int numTwo) {
+        this.numTwo = numTwo;
+    }
+
+    public void setNumThree(int numThree) {
+        this.numThree = numThree;
+    }
+
     private int numThree;
 
     public int getNumCount() {
@@ -70,6 +83,9 @@ public class NumData {
         this.numTwo = NumUtils.getTwoNum(num);
         this.numThree = NumUtils.getThreeNum(num);
     }
+    public NumData(){
+
+    }
     public String numStrOne(){
         return getNumOne()+"";
     }
@@ -80,12 +96,7 @@ public class NumData {
         return getNumThree()+"";
     }
     public String numStr(){
-        if(num<10){
-            return "00"+num;
-        }else if(num>9&&num<100){
-            return "0"+num;
-        }
-        return num+"";
+      return   getNumOne()+""+getNumTwo()+""+getNumThree()+"";
     }
 
 }
