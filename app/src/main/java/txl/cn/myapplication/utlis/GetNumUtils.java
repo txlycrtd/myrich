@@ -23,6 +23,7 @@ public class GetNumUtils {
     private List<Integer> twoNumList;
     private List<Integer> threeNumList;
     private List<NumData> lawDataList;
+    private List<String> numCount;
     /**
      * 10次历史记录的最大值
      */
@@ -34,6 +35,7 @@ public class GetNumUtils {
         twoNumList=new ArrayList<>();
         threeNumList=new ArrayList<>();
         lawDataList=new ArrayList<>();
+        numCount=new ArrayList<>();
         for(DbData dbData:dbDataList){
             NumData numData=new NumData(dbData.getNum());
             numDataList.add(numData);
@@ -93,17 +95,37 @@ public class GetNumUtils {
      * 十次号码后的序号
      */
     public void getDataLaw(){
+        int one=0,two=0,three=0;
         for(int i=maxCount+1;i<dbDataList.size();i++){
             DbData dbData=dbDataList.get(i);
             NumData historyData=new NumData(dbData.getNum());
+
+            for(int b=0;b<i+1;b++){
+                NumData dbNumData=new NumData(dbDataList.get(b).getNum());
+                if(historyData.getNumOne()==dbNumData.getNumOne()){
+                    one++;
+                }if(historyData.getNumTwo()==dbNumData.getNumTwo()){
+                    two++;
+                }
+                if(historyData.getNumThree()==dbNumData.getNumThree()){
+                    three++;
+                }
+
+            }
+
             NumData lawData=setHistoryDataList(historyData);
+            numCount.add(one+"/"+i+"."+two+"/"+i+"."+three+"/"+i);
+            one=0;
+            two=0;
+            three=0;
             lawDataList.add(lawData);
         }
 
         Log.e("排列数据",maxCount+"??"+dbDataList.size());
         for(int i=0;i<lawDataList.size();i++){
             NumData data=lawDataList.get(i);
-            Log.e("排列数据"+i,data.numStr()+">>>>"+(data.getNumOne()+data.getNumTwo()+data.getNumThree()));
+
+            Log.e("排列数据"+i,"号码:"+dbDataList.get(maxCount+1+i).getNum()+">>>>"+"排列:"+data.numStr()+">>>>"+"出现次数:"+numCount.get(i));
         }
 
     }
