@@ -2,10 +2,8 @@ package txl.cn.myapplication.utlis;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -125,7 +123,9 @@ public class GetNumUtils {
         for(int i=0;i<lawDataList.size();i++){
             NumData data=lawDataList.get(i);
 
-            Log.e("排列数据"+i,"号码:"+dbDataList.get(maxCount+1+i).getNum()+">>>>"+"排列:"+data.numStr()+">>>>"+"出现次数:"+numCount.get(i));
+            Log.e("排列数据"+i,"号码:"+dbDataList.get(maxCount+1+i).getNum()+">>>>"+"排列:"+data.numStr()+">>>>"+"出现次数:"+numCount.get(i)
+            +">>>>"+data.getNumDS()+">>>>"+data.getNumSize()+">>>>和值:"+(data.getNumOne()+data.getNumTwo()+data.getNumThree())
+            );
         }
 
     }
