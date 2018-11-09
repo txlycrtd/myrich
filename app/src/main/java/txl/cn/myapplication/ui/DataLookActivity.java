@@ -8,12 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.gson.Gson;
+
 import txl.cn.myapplication.R;
 import txl.cn.myapplication.adapter.MyAdapter;
 import txl.cn.myapplication.db.DBManager;
-import txl.cn.myapplication.utlis.GetDataUtils;
 import txl.cn.myapplication.utlis.GetNumUtils;
-import txl.cn.myapplication.utlis.NumUtils;
 
 public class DataLookActivity extends AppCompatActivity {
     private RecyclerView dataList;
@@ -40,8 +40,10 @@ public class DataLookActivity extends AppCompatActivity {
         btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetNumUtils utils=new GetNumUtils(manager.queryDta());
-                utils.getDataLaw();
+                GetNumUtils utils=new GetNumUtils(manager.queryDta(),DataLookActivity.this);
+                String dataStr=new Gson().toJson(utils.getDataLaw());
+                startActivity(InputActivity.InPutInit(DataLookActivity.this,dataStr));
+
             }
         });
     }

@@ -17,7 +17,6 @@ public class InputActivity extends AppCompatActivity {
     private TextView tv;
     private Button button;
     private static String SSS="sss";
-    private static String CONUT="ssss";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +28,11 @@ public class InputActivity extends AppCompatActivity {
         button=findViewById(R.id.bt_copy);
         tv=findViewById(R.id.tv_input);
         String text=getIntent().getStringExtra(SSS);
-        int cont=getIntent().getIntExtra(CONUT,0);
-        button.setText("共"+cont+"注,点击复制");
         tv.setText(text);
     }
-    public static Intent InPutInit(Context context,String datatext, int count){
+    public static Intent InPutInit(Context context,String datatext){
         Intent intent=new Intent(context,InputActivity.class);
         intent.putExtra(SSS,datatext);
-        intent.putExtra(CONUT,count);
         return intent;
     }
 }

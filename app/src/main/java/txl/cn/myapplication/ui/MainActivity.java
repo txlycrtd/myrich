@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 string=string+NumUtils.intToString(datas.get(i));
             }
         }
-        startActivity(InputActivity.InPutInit(this,string,datas.size()));
+//        startActivity(InputActivity.InPutInit(this,string,datas.size()));
     }
     private void showNumcount(){
             numNa=dbManager.queryDta().size();
