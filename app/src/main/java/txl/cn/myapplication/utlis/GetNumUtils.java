@@ -30,9 +30,9 @@ public class GetNumUtils {
      */
     private int maxCount;
 
-    public GetNumUtils(List<DbData> daList,Context contexts) {
+    public GetNumUtils(List<DbData> daList, Context contexts) {
         this.dbDataList = daList;
-        this.context=contexts;
+        this.context = contexts;
         numDataList = new ArrayList<>();
         oneNumList = new ArrayList<>();
         twoNumList = new ArrayList<>();
@@ -56,10 +56,8 @@ public class GetNumUtils {
             if (oneNumList.size() == 10) {
                 maxCount = i;
                 break;
-            }
-            if(oneNumList.size() <10&&i==numDataList.size()-1){
-                Toast.makeText(context,"数据不够",Toast.LENGTH_SHORT).show();
-                return;
+            } else if (oneNumList.size() < 10 && i == numDataList.size() - 1) {
+                Toast.makeText(context, "数据不够", Toast.LENGTH_SHORT).show();
             }
         }
         for (int i = 0; i < numDataList.size(); i++) {
@@ -69,10 +67,8 @@ public class GetNumUtils {
             if (twoNumList.size() == 10) {
                 maxCount = maxCount > i ? maxCount : i;
                 break;
-            }
-            if(twoNumList.size() <10&&i==numDataList.size()-1){
-                Toast.makeText(context,"数据不够",Toast.LENGTH_SHORT).show();
-                return;
+            } else if (twoNumList.size() < 10 && i == numDataList.size() - 1) {
+                Toast.makeText(context, "数据不够", Toast.LENGTH_SHORT).show();
             }
         }
         for (int i = 0; i < numDataList.size(); i++) {
@@ -82,11 +78,8 @@ public class GetNumUtils {
             if (threeNumList.size() == 10) {
                 maxCount = maxCount > i ? maxCount : i;
                 break;
-            }
-
-            if(threeNumList.size() <10&&i==numDataList.size()-1){
-                Toast.makeText(context,"数据不够",Toast.LENGTH_SHORT).show();
-                return;
+            } else if (threeNumList.size() < 10 && i == numDataList.size() - 1) {
+                Toast.makeText(context, "数据不够", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -122,9 +115,9 @@ public class GetNumUtils {
         }
 
         Log.e("排列数据", maxCount + "??" + dbDataList.size());
-        Log.e("排列0",new Gson().toJson(oneNumList));
-        Log.e("排列0",new Gson().toJson(twoNumList));
-        Log.e("排列0",new Gson().toJson(threeNumList));
+        Log.e("排列0", new Gson().toJson(oneNumList));
+        Log.e("排列0", new Gson().toJson(twoNumList));
+        Log.e("排列0", new Gson().toJson(threeNumList));
         List onesList = oneNumList;
         List twosList = twoNumList;
         List threesList = threeNumList;
@@ -143,9 +136,9 @@ public class GetNumUtils {
             }
 
         }
-        Log.e("排列2",new Gson().toJson(onesList));
-        Log.e("排列2",new Gson().toJson(twosList));
-        Log.e("排列2",new Gson().toJson(threesList));
+        Log.e("排列2", new Gson().toJson(onesList));
+        Log.e("排列2", new Gson().toJson(twosList));
+        Log.e("排列2", new Gson().toJson(threesList));
         if (onesList.size() == 10) {
             if (ones < 10) {
                 onesList.remove(0);
@@ -172,7 +165,7 @@ public class GetNumUtils {
             }
         }
         if (threesList.size() == 10) {
-            if (threes <10) {
+            if (threes < 10) {
                 threesList.remove(0);
                 threesList.remove(0);
             } else if (threes > 10) {
@@ -187,10 +180,10 @@ public class GetNumUtils {
         dataList.add(new Gson().toJson(onesList));
         dataList.add(new Gson().toJson(twosList));
         dataList.add(new Gson().toJson(threesList));
-        Log.e("排列值:",ones+">>"+twos+">>"+threes);
-        Log.e("排列3",new Gson().toJson(onesList));
-        Log.e("排列3",new Gson().toJson(twosList));
-        Log.e("排列3",new Gson().toJson(threesList));
+        Log.e("排列值:", ones + ">>" + twos + ">>" + threes);
+        Log.e("排列3", new Gson().toJson(onesList));
+        Log.e("排列3", new Gson().toJson(twosList));
+        Log.e("排列3", new Gson().toJson(threesList));
         return dataList;
     }
 
