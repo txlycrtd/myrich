@@ -140,10 +140,10 @@ public class GetNumUtils {
         Log.e("排列2", new Gson().toJson(twosList));
         Log.e("排列2", new Gson().toJson(threesList));
         if (onesList.size() == 10) {
-            if (ones < 10) {
+            if (ones < 9) {
                 onesList.remove(0);
                 onesList.remove(0);
-            } else if (ones > 10) {
+            } else if (ones > 11) {
                 onesList.remove(onesList.size() - 1);
                 onesList.remove(onesList.size() - 1);
             } else {
@@ -153,10 +153,10 @@ public class GetNumUtils {
         }
 
         if (twosList.size() == 10) {
-            if (twos < 10) {
+            if (twos < 9) {
                 twosList.remove(0);
                 twosList.remove(0);
-            } else if (twos > 10) {
+            } else if (twos > 11) {
                 twosList.remove(twosList.size() - 1);
                 twosList.remove(twosList.size() - 1);
             } else {
@@ -165,10 +165,10 @@ public class GetNumUtils {
             }
         }
         if (threesList.size() == 10) {
-            if (threes < 10) {
+            if (threes < 9) {
                 threesList.remove(0);
                 threesList.remove(0);
-            } else if (threes > 10) {
+            } else if (threes > 11) {
                 threesList.remove(threesList.size() - 1);
                 threesList.remove(threesList.size() - 1);
             } else {
