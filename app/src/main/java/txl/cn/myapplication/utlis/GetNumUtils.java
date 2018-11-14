@@ -26,6 +26,14 @@ public class GetNumUtils {
     private List<NumData> lawDataList;
     private Context context;
     /**
+     * 上两次的排列数据
+     */
+    private List<Integer> lawData;
+    /**
+     * 上两次的中奖数据
+     */
+    private List<Integer> lawNumData;
+    /**
      * 10次历史记录的最大值
      */
     private int maxCount;
@@ -38,6 +46,8 @@ public class GetNumUtils {
         twoNumList = new ArrayList<>();
         threeNumList = new ArrayList<>();
         lawDataList = new ArrayList<>();
+        lawData=new ArrayList<>();
+        lawNumData=new ArrayList<>();
         for (DbData dbData : dbDataList) {
             NumData numData = new NumData(dbData.getNum());
             numDataList.add(numData);
@@ -103,88 +113,96 @@ public class GetNumUtils {
     /**
      * 十次号码后的序号
      */
-    public List<String> getDataLaw() {
-        int ones = 0;
-        int twos = 0;
-        int threes = 0;
+    public Boolean getDataLaw(NumData datas) {
+        this.numData = datas;
+        boolean isOk = true;
+
         for (int i = maxCount + 1; i < dbDataList.size(); i++) {
             DbData dbData = dbDataList.get(i);
             NumData historyData = new NumData(dbData.getNum());
-            NumData lawData = setHistoryDataList(historyData);
-            lawDataList.add(lawData);
+            NumData lawDatass = setHistoryDataList(historyData);
+            lawDataList.add(lawDatass);
         }
 
         Log.e("排列数据", maxCount + "??" + dbDataList.size());
         Log.e("排列0", new Gson().toJson(oneNumList));
         Log.e("排列0", new Gson().toJson(twoNumList));
         Log.e("排列0", new Gson().toJson(threeNumList));
-        List onesList = oneNumList;
-        List twosList = twoNumList;
-        List threesList = threeNumList;
+        List<Integer> onesList = oneNumList;
+        List<Integer> twosList = twoNumList;
+        List<Integer> threesList = threeNumList;
 
         for (int i = 0; i < lawDataList.size(); i++) {
             NumData data = lawDataList.get(i);
+            if(i==lawDataList.size()-1||i==lawDataList.size()-2){
+                lawData.add(data.getNumOne());
+                lawData.add(data.getNumTwo());
+                lawData.add(data.getNumThree());
+            }
+            if ((maxCount + i + 1) < dbDataList.size()) {
+                Log.e("排列数据" + i, "号码:" + dbDataList.get(maxCount + 1 + i).getNum() + ">>>>" + "排列:" + data.numStr() + ">>>>" +
+                        data.getNumDS() + ">>>>" + data.getNumSize() + ">>>>和值:" + (data.getNumOne() + data.getNumTwo() + data.getNumThree())
 
-            Log.e("排列数据" + i, "号码:" + dbDataList.get(maxCount + 1 + i).getNum() + ">>>>" + "排列:" + data.numStr() + ">>>>" +
-                    data.getNumDS() + ">>>>" + data.getNumSize() + ">>>>和值:" + (data.getNumOne() + data.getNumTwo() + data.getNumThree())
-
-            );
-            if (i == lawDataList.size() - 2 || i == lawDataList.size() - 1) {
-                ones = ones + data.getNumOne();
-                twos = twos + data.getNumTwo();
-                threes = threes + data.getNumThree();
+                );
             }
 
+
         }
-        Log.e("排列2", new Gson().toJson(onesList));
-        Log.e("排列2", new Gson().toJson(twosList));
-        Log.e("排列2", new Gson().toJson(threesList));
-        if (onesList.size() == 10) {
-            if (ones < 9) {
-                onesList.remove(0);
-                onesList.remove(0);
-            } else if (ones > 11) {
-                onesList.remove(onesList.size() - 1);
-                onesList.remove(onesList.size() - 1);
-            } else {
-                onesList.remove(0);
-                onesList.remove(onesList.size() - 1);
-            }
+        /**
+         * 只含2以下 8以上
+         */
+        int one,one1,two,two1,three,three1;
+        int one2,one3,two2,two3,three2,three3;
+        int numOne,numTwo,numThree;
+        one=onesList.get(0);
+        one1=onesList.get(1);
+        one2=onesList.get(8);
+        one3=onesList.get(9);
+        two=twosList.get(0);
+        two1=twosList.get(1);
+        two2=twosList.get(8);
+        two3=twosList.get(9);
+        three=threesList.get(0);
+        three1=threesList.get(1);
+        three2=threesList.get(8);
+        three3=threesList.get(9);
+        numOne=numData.getNumOne();
+        numTwo=numData.getNumTwo();
+        numThree=numData.getNumThree();
+        if(((numOne==one||numOne==one1)&&(numTwo==two||numTwo==two1))
+                ||((numOne==one||numOne==one1)&&(numThree==three||numThree==three1))
+                ||((numTwo==two||numTwo==two1)&&(numThree==three||numThree==three1))
+                ){
+            isOk=false;
+        }
+        if(((numOne==one2||numOne==one3)&&(numTwo==two2||numTwo==two3))
+                ||((numOne==one2||numOne==one3)&&(numThree==three2||numThree==three3))
+                ||((numTwo==two2||numTwo==two3)&&(numThree==three2||numThree==three3))
+                ){
+            isOk=false;
+        }
+//        NumData data=new NumData(dbDataList.get(dbDataList.size()-1).getNum());
+//        NumData data2=new NumData(dbDataList.get(dbDataList.size()-2).getNum());
+//        lawNumData.add(data.getNumOne());
+//        lawNumData.add(data.getNumTwo());
+//        lawNumData.add(data.getNumThree());
+//        lawNumData.add(data2.getNumOne());
+//        lawNumData.add(data2.getNumTwo());
+//        lawNumData.add(data2.getNumThree());
+        NumData lawDatas=setHistoryDataList(numData);
+//        if((lawNumData.contains(numData.getNumOne())&&(lawNumData.contains(numData.getNumTwo())&&lawNumData.contains(numData.getNumThree())
+//        ||(!lawNumData.contains(numData.getNumOne())&&(!lawNumData.contains(numData.getNumTwo())&&!lawNumData.contains(numData.getNumThree()))))))
+//        {
+//            isOk=false;
+//        }
+        if((lawData.contains(lawDatas.getNumOne())&&(lawData.contains(lawDatas.getNumTwo())&&lawData.contains(lawDatas.getNumThree())
+                ||(!lawData.contains(lawDatas.getNumOne())&&(!lawData.contains(lawDatas.getNumTwo())&&!lawData.contains(lawDatas.getNumThree()))))))
+        {
+            isOk=false;
         }
 
-        if (twosList.size() == 10) {
-            if (twos < 9) {
-                twosList.remove(0);
-                twosList.remove(0);
-            } else if (twos > 11) {
-                twosList.remove(twosList.size() - 1);
-                twosList.remove(twosList.size() - 1);
-            } else {
-                twosList.remove(0);
-                twosList.remove(twosList.size() - 1);
-            }
-        }
-        if (threesList.size() == 10) {
-            if (threes < 9) {
-                threesList.remove(0);
-                threesList.remove(0);
-            } else if (threes > 11) {
-                threesList.remove(threesList.size() - 1);
-                threesList.remove(threesList.size() - 1);
-            } else {
-                threesList.remove(0);
-                threesList.remove(threesList.size() - 1);
-            }
-        }
-        List<String> dataList = new ArrayList<>();
-        dataList.add(new Gson().toJson(onesList));
-        dataList.add(new Gson().toJson(twosList));
-        dataList.add(new Gson().toJson(threesList));
-        Log.e("排列值:", ones + ">>" + twos + ">>" + threes);
-        Log.e("排列3", new Gson().toJson(onesList));
-        Log.e("排列3", new Gson().toJson(twosList));
-        Log.e("排列3", new Gson().toJson(threesList));
-        return dataList;
+
+        return isOk;
     }
 
     private NumData setHistoryDataList(NumData data) {
@@ -226,5 +244,5 @@ public class GetNumUtils {
 
         return numData;
     }
-
 }
+
